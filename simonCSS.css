@@ -1,0 +1,27 @@
+#container{
+    width: 100%;
+/*padding-top: 100em;*/
+}
+
+.box{
+    width: 50%;
+    padding-top: 25%;
+    border: 10px solid black;
+    float: left;
+}
+
+#red{
+    background-color: red;
+}
+
+#blue{
+    background-color: blue;
+}
+
+#green{
+    background-color: green;
+}
+
+#yellow{
+    background-color: yellow;
+}
