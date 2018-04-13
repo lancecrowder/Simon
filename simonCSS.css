@@ -4,8 +4,8 @@
 }
 
 .box{
-    width: 50%;
-    padding-top: 25%;
+    width: 35%;
+    padding-top: 15%;
     border: 10px solid black;
     float: left;
 }
@@ -24,4 +24,14 @@
 
 #yellow{
     background-color: yellow;
+}
+
+button{
+    width: 50%;
+    height: 4em;
+    align-content: center;
+    background-color: firebrick;
+    border: 10px solid white;
+    font-size: x-large;
+    alignment: center;
 }
