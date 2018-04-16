@@ -35,3 +35,8 @@ button{
     font-size: x-large;
     alignment: center;
 }
+
+p {
+    text-align: center;
+    font-size: xx-large;
+}

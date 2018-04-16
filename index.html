@@ -17,8 +17,7 @@
     <div id="blue" class="box"></div>
     <div id="yellow" class="box"></div>
 </div>
-
-
+<div id = showResult></div>
 <button>GAME ON!</button>
 <p></p>
 <script src="simonJS.js"></script>
@@ -26,23 +25,15 @@
 <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>-->
 <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>-->
 <script>
-    $('.box').click(function () {
-        // console.log('click');
-        $(this).animate({
-            opacity: 0.1
-        }, 300, function () {
-            $(this).animate ({
-                opacity: 1
-            });
-        });
-    });
+
 
 // create sequence
     var theSequence = [];
-    var round = 1;
+    var round = 0;
     var counter = 1;
+    var playerArray = [];
 
-    function gameOn() {
+function gameOn() {
         var nextNumber = Math.floor(Math.random() * 4);
         // console.log(nextNumber);
         if (nextNumber === 0) {
@@ -57,23 +48,51 @@
         console.log(nextNumber);
         console.log(theSequence);
         playSequence();
-
-        var i = 0;
-        $(".box").click(function(color) {
-            if((i === (theSequence.length -1)) && event.key === theSequence[theSequence.length -1]) {
-                alert("yay! 30 lives");
-            } else if(color === theSequence[i]) {
-                i++;
-                console.log(color.key);
-            } else {
-                i = 0;
-            }
-        });
     }
+
+$('#red, #green, #blue, #yellow').click(function () {
+    playerArray.push(this.id);
+    console.log(`playerArray is ${playerArray}`);
+    // console.log('click');
+    // console.log("I work!");
+    // if((i === (theSequence.length -1)) && color.key === theSequence[theSequence.length -1]) {
+    //     alert("Next?!");
+    // } else if(color === theSequence[i]) {
+    //     i++;
+    //     console.log(color.key);
+    // } else {
+    //     i = 0;
+
+    $(this).animate({
+        opacity: 0.1
+    }, 300, function () {
+        $(this).animate ({
+            opacity: 1
+        });
+    });
+    console.log(`playerArray right before comparison: ${playerArray}`);
+    console.log(`theSequence right before comparison: ${theSequence}`);
+    compareReady();
+});
+
+    // var i = 0;
+    // $(".box").click(function(color) {
+    //     console.log("I work!");
+    //     if((i === (theSequence.length -1)) && color.key === theSequence[theSequence.length -1]) {
+    //         alert("Next?!");
+    //     } else if(color === theSequence[i]) {
+    //         i++;
+    //         console.log(color.key);
+    //     } else {
+    //         i = 0;
+    //     }
+    // });
 
 
     $('button').click(function() {
         gameOn();
+        round++;
+        $('p').text("Round: " + round);
     });
 
     function displaySequence(color) {
@@ -89,23 +108,41 @@
 
     function playSequence () {
         theSequence.forEach(function (color) {
-            console.log("right inside function" + color);
-            var i = setInterval(function () {
+            console.log("right inside playSequence function, " + color);
+            var intervalId = setInterval(function () {
                 displaySequence(color);
                 console.log("inside the setInterval the color is " + color);
                 console.log(`the counter is ${counter}`);
                 console.log(`the sequence array length is ${theSequence.length}`);
                 if (counter === theSequence.length) {
-                    clearInterval(i);
-                    counter = 0;
+                    clearInterval(intervalId);
+                    counter = 1;
                 }
                 counter++;
-            }, 1000);
+            }, 500);
         });
     }
 
-    function gameOver() {
+    function compareReady (){
+        if (theSequence.length === playerArray.length){
+            compareArrays()
+        } else {
+            console.log("not yet!");
+        }
+}
 
+    function compareArrays() {
+        if (theSequence.every((el, i) => el === playerArray[i])) {
+            console.log('Correct');
+            playerArray = [];
+            $('button').text('Keep the Party Going!');
+        } else {
+            gameOver();
+        }
+    }
+
+    function gameOver() {
+        console.log('Wrong!');
     }
 </script>
 </body>
